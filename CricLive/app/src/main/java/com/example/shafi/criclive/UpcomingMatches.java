@@ -28,6 +28,7 @@ public class UpcomingMatches extends Fragment {
     ArrayList<LiveMatchesModelClass> listLiveMatches;
     ArrayList<OldMatchesModelClass> listOldMatches;
     ArrayList<UpcomingMatchesModelClass> listUpcomingMatches;
+    ArrayList<LiveMatchesDescriptiveModelClass> listLive;
 
     private MyAdapter myAdapter;
     private OldMatchAdapter oldMatchAdapter;
@@ -62,7 +63,7 @@ public class UpcomingMatches extends Fragment {
         upcomingMatchesAdapter = new UpcomingMatchesAdapter(context,listUpcomingMatches);
 
 
-        myAdapter= new MyAdapter(context,listLiveMatches);
+        myAdapter= new MyAdapter(context,listLive);
         oldMatchAdapter = new OldMatchAdapter(context,listOldMatches);
 
 //        mAdapter.shaficonfirm(OldMatches.this);

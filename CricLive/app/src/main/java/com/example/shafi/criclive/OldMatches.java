@@ -32,6 +32,7 @@ public class OldMatches extends Fragment implements MyAdapter.shaficlass{
     ArrayList<UpcomingMatchesModelClass> listUpcomingMatches;
     private MyAdapter myAdapter;
     private UpcomingMatchesAdapter upcomingMatchesAdapter;
+    ArrayList<LiveMatchesDescriptiveModelClass> listLive;
 
 
 
@@ -59,7 +60,7 @@ public class OldMatches extends Fragment implements MyAdapter.shaficlass{
 
         oldMatchAdapter = new OldMatchAdapter(context,listOldMatches);
 
-        myAdapter = new MyAdapter(context,listLiveMatches);
+        myAdapter = new MyAdapter(context,listLive);
         upcomingMatchesAdapter = new UpcomingMatchesAdapter(context,listUpcomingMatches);
 
 //        mAdapter.shaficonfirm(OldMatches.this);

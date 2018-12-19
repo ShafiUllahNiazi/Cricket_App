@@ -14,12 +14,13 @@ import android.widget.Toast;
 public class MatchSummary  extends Fragment {
 
     TextView textView2;
+
     private String data;
 
     public MatchSummary() {
 
     }
-    public void getData (String data) {
+    public void setData (String data) {
         this.data = data;
 
     }

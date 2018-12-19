@@ -10,15 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     Context context;
-    ArrayList<LiveMatchesModelClass> data;
+//    ArrayList<LiveMatchesModelClass> data;
+    ArrayList<LiveMatchesDescriptiveModelClass> data;
 
     shaficlass object;
 
-    public MyAdapter(Context context, ArrayList<LiveMatchesModelClass> data) {
+//    public MyAdapter(Context context, ArrayList<LiveMatchesModelClass> data) {
+//        this.context = context;
+//        this.data = data;
+//    }
+    public MyAdapter(Context context, ArrayList<LiveMatchesDescriptiveModelClass> data) {
         this.context = context;
         this.data = data;
     }
@@ -37,9 +44,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-        viewHolder.match_Title.setText(Long.toString(data.get(i).getUnique_id()));
+//        viewHolder.match_Title.setText(Long.toString(data.get(i).getUnique_id()));
+        try {
+            viewHolder.match_Title.setText(data.get(i).getJsonObject().getString("score"));
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent main2= new Intent(context.getApplicationContext(),Main2Activity.class);
+                    main2.putExtra("id","DDDDDDDD");
+                    main2.putExtra("id2",data.get(i).getLiveMatchesListsItem().getUnique_id());
+                    context.startActivity(main2);
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
 //        viewHolder.itemDescription.setText(data.get(i).getDescription());
@@ -57,22 +81,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView match_Title;
-        TextView itemDescription;
-        ImageView imageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             match_Title = (TextView) itemView.findViewById(R.id.match_Title);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    object.shafimethod("sdfsdf");
-                    Intent main2= new Intent(context.getApplicationContext(),Main2Activity.class);
-                    main2.putExtra("unique_id","pakistan");
-                    context.startActivity(main2);
-
-                }
-            });
 //            itemDescription = (TextView) itemView.findViewById(R.id.itemDescription);
 //            imageView = itemView.findViewById(R.id.imageView);
         }

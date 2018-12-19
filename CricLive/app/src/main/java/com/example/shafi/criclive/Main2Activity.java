@@ -30,7 +30,7 @@ public class Main2Activity extends AppCompatActivity {
     private static final String TAG ="Main2Activity";
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
-    String data;
+    long unique_id;
 
 
     @Override
@@ -47,22 +47,25 @@ public class Main2Activity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         Intent intent = getIntent();
-        data = intent.getStringExtra("unique_id");
-        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+//        String g = intent.getStringExtra("id");
+        //LiveMatchesDescriptiveModelClass m= (LiveMatchesDescriptiveModelClass) intent.getSerializableExtra("id2");
+        unique_id =intent.getLongExtra("id2",0);
+        Log.d("Jaleel",unique_id+"");
+//        LiveMatchesDescriptiveModelClass stuff = (LiveMatchesDescriptiveModelClass) intent.getSerializableExtra("id");
+//        Toast.makeText(this, stuff.getLiveMatchesListsItem().getUnique_id() + " Waleed", Toast.LENGTH_SHORT).show();
 
+//        Toast.makeText(this, "333 " + g , Toast.LENGTH_SHORT).show();
     }
 
 
     private void setupViewPager(ViewPager viewPager){
         SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
         MatchSummary ob= new MatchSummary();
-        ob.getData("usman and shafi");
+        ob.setData(unique_id+"");
         adapter.addFragment(ob,"Match Summary");
-
 
         adapter.addFragment(new UpcomingMatches(),"Upcoming");
         viewPager.setAdapter(adapter);
-
     }
 
 

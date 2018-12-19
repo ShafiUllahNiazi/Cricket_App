@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ApiRead extends AsyncTask<String, Void, String> {
 
 
+
     private long unique_id;
     private String date;
     private String dateTimeGMT;
@@ -36,34 +37,17 @@ public class ApiRead extends AsyncTask<String, Void, String> {
     MyAdapter mAdapter;
     OldMatchAdapter oldMatchAdapter;
     UpcomingMatchesAdapter upcomingMatchesAdapter;
+    JSONObject jsonObject;
+    ArrayList<LiveMatchesDescriptiveModelClass> listLive;
+
+    public void setListLive(ArrayList<LiveMatchesDescriptiveModelClass> listLive) {
+        this.listLive = listLive;
+    }
+
+
 
     TextView textView;
 
-//    public ApiRead(MyAdapter mAdapter, ArrayList<LiveMatchesModelClass> listliveMatches,ArrayList<OldMatchesModelClass> listOldMatches,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
-//        this.listliveMatches =listliveMatches;
-//
-//        this.lisOldMatches=listOldMatches;
-//        this.listUpcomingMatches = listUpcomingMatches;
-//        this.mAdapter=mAdapter;
-//
-//    }
-//    public ApiRead(OldMatchAdapter oldMatchAdapter, ArrayList<LiveMatchesModelClass> listliveMatches,ArrayList<OldMatchesModelClass> listOldMatches,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
-//        this.listliveMatches =listliveMatches;
-//
-//        this.lisOldMatches=listOldMatches;
-//        this.listUpcomingMatches = listUpcomingMatches;
-//        this.oldMatchAdapter=oldMatchAdapter;
-//
-//    }
-//
-//    public ApiRead(UpcomingMatchesAdapter upcomingMatchesAdapter, ArrayList<LiveMatchesModelClass> listliveMatches,ArrayList<OldMatchesModelClass> listOldMatches,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
-//        this.listliveMatches =listliveMatches;
-//
-//        this.lisOldMatches=listOldMatches;
-//        this.listUpcomingMatches = listUpcomingMatches;
-//        this.upcomingMatchesAdapter= upcomingMatchesAdapter;
-//
-//    }
 
     public ApiRead (MyAdapter mAdapter,OldMatchAdapter oldMatchAdapter,UpcomingMatchesAdapter upcomingMatchesAdapter,ArrayList<LiveMatchesModelClass> listliveMatches,ArrayList<OldMatchesModelClass> listOldMatches,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
 
@@ -74,20 +58,16 @@ public class ApiRead extends AsyncTask<String, Void, String> {
         this.listOldMatches = listOldMatches;
         this.listUpcomingMatches = listUpcomingMatches;
 
+
     }
 
 
+    private void populateLists(JSONObject jsonObject){
 
 
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-
+        JSONArray jsonArray = null;
         try {
-            JSONObject jsonObject = new JSONObject(result);
-            String score =jsonObject.toString();
-//                textView.setText(score);
-            JSONArray jsonArray = jsonObject.getJSONArray("matches");
+            jsonArray = jsonObject.getJSONArray("matches");
             Log.d("jsonArraya",jsonArray.toString());
 
 //                Log.d("SSSJson",jsonArray.g);
@@ -116,16 +96,21 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
                     }else{
                         toss_winner_team = jsonArray.getJSONObject(i).getString("toss_winner_team");
+
+
 //                        winner_team = "N?A";
-                        listliveMatches.add(new LiveMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,matchStarted));
+//                        listliveMatches.add(new LiveMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,matchStarted));
+                        LiveMatchesModelClass item = new LiveMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,matchStarted);
+
+                        String scoreUrl = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+Long.toString(unique_id);
+                        ApiReadCricketScore apiReadCricketScore = new ApiReadCricketScore(mAdapter,listLive,item);
+                        apiReadCricketScore.execute(scoreUrl);
+
 
                     }
 
                 }else {
-//                        toss_winner_team = null;
-//                        winner_team = null;
-//                    toss_winner_team = "N/A";
-//                    winner_team = "N/A";
+
                     listUpcomingMatches.add(new UpcomingMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,matchStarted));
 
                 }
@@ -135,26 +120,7 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
 
             }
-//                for (int i = 0; i < 100; i++) {
-//
-//
-//
-//                    oldMatches.add(new OldMatches("abc","def","aaaa"));
-//
-//                }
-//
-//                String s = newMatches.get(1).getUnique_id().toString();
-//                String score = jsonObject.getString("score");
-//                JSONArray jsonArray = new JSONArray(score);
-//                User.fromJson(jsonArray);
 
-
-//                textView.setText(s);
-//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,User.fromJson(jsonArray));
-//            textView.setText(s);
-//                textView.setText(newMatches.toString());
-//                textView.setText(newMatches.toString());
-//                putRecyclerVIew();
             Log.d("sizeeeL",Integer.toString(listliveMatches.size()));
 
             Log.d("sizeeeO",Integer.toString(listOldMatches.size()));
@@ -166,53 +132,39 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
 
             Log.d("Khann",listliveMatches.toString());
-//                Log.i("Shafii",score);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
+//        populateListsActual(listliveMatches,listOldMatches);
+
+    }
+
+    private void populateListsActual(ArrayList<LiveMatchesModelClass> listliveMatches, ArrayList<OldMatchesModelClass> listOldMatches) {
+        for (int i=0; i<2;i++){
+
+            String scoreUrl = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+Long.toString(listliveMatches.get(i).getUnique_id());
+            ApiReadCricketScore apiReadCricketScore = new ApiReadCricketScore(mAdapter,listLive,listliveMatches.get(i));
+            apiReadCricketScore.execute(scoreUrl);
 
 
+        }
+    }
 
 
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            populateLists(jsonObject);
 
 
-
-
-
-
-
-
-//        try {
-//            JSONObject jsonObject = new JSONObject(result);
-//            String score =jsonObject.toString();
-//            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//
-//                String title = jsonArray.getJSONObject(i).getString("title");
-//                String description = jsonArray.getJSONObject(i).getString("description");
-//                String unique_id = jsonArray.getJSONObject(i).getString("unique_id");
-//
-//                oldMatches.add(new OldMatches(title,description,unique_id));
-////                myAdapter.notifyItemInserted(oldMatches.size()-1);
-//                int g = myAdapter.getItemCount();
-//                String ghhh= Integer.toString(g);
-//                Log.d("mmadapter",ghhh);
-//                g=oldMatches.size();
-//                ghhh = Integer.toString(g);
-//                Log.d("ssize",ghhh);
-//
-//            }
-//            myAdapter.notifyDataSetChanged();
-//
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
     RequestTOApi requestTOApi;
     JSONObject jsonObjectApi;
 
+    ArrayList<JSONObject> jsonObjects;
+    ArrayList<LiveMatchesDescriptiveModelClass> listLive;
+
 
     Button button;
     View view;
@@ -51,12 +55,20 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
         listLiveMatches=new ArrayList<>();
         listOldMatches=new ArrayList<>();
         listUpcomingMatches=new ArrayList<>();
-        listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
+        listLive = new ArrayList<>();
+//        listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("score","a vs b");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        listLive.add(new LiveMatchesDescriptiveModelClass(listLiveMatches.get(0),jsonObject));
 //        listOldMatches.add(new OldMatchesModelClass(1,"2","3","","","",true,"","",true));
 //        listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
         context = getActivity();
         button = view.findViewById(R.id.button1);
-        final JSONObject jsonObject;
+
 
         recyclerView = view.findViewById(R.id.recyclerView1);
 
@@ -64,7 +76,7 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
         recyclerView.setLayoutManager(layoutManager);
         // define an adapter
 
-        myAdapter = new MyAdapter(context,listLiveMatches);
+        myAdapter = new MyAdapter(context,listLive);
 
         myAdapter.shaficonfirm(LiveMatches.this);
 
@@ -72,6 +84,7 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
 
         oldMatchAdapter = new OldMatchAdapter(context,listOldMatches);
         upcomingMatchesAdapter = new UpcomingMatchesAdapter(context,listUpcomingMatches);
+
 
 
 
@@ -96,12 +109,13 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
 //                ApiRead apiRead = new ApiRead(mAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
                 ApiRead apiRead = new ApiRead(myAdapter,oldMatchAdapter,upcomingMatchesAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
 
+                apiRead.setListLive(listLive);
                 apiRead.execute(apiUrl);
 
 
 
-                listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
-                myAdapter.notifyItemInserted(listLiveMatches.size()-1);
+//                listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
+//                myAdapter.notifyItemInserted(listLiveMatches.size()-1);
 
                 Toast.makeText(getActivity(), "Button Tab 1 ", Toast.LENGTH_SHORT).show();
             }
