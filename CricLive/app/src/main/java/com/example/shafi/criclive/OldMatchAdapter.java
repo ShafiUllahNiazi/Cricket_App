@@ -1,6 +1,7 @@
 package com.example.shafi.criclive;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,14 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class OldMatchAdapter extends RecyclerView.Adapter<OldMatchAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<OldMatchesModelClass> data;
+    ArrayList<OldMatchesDescriptiveModelClass> data;
 
-    public OldMatchAdapter(Context context, ArrayList<OldMatchesModelClass> data) {
+    public OldMatchAdapter(Context context, ArrayList<OldMatchesDescriptiveModelClass> data) {
         this.context = context;
         this.data = data;
     }
@@ -31,9 +34,24 @@ public class OldMatchAdapter extends RecyclerView.Adapter<OldMatchAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OldMatchAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull OldMatchAdapter.ViewHolder viewHolder, final int i) {
 
-        viewHolder.match_Title.setText(Long.toString(data.get(i).getUnique_id()));
+        try {
+            viewHolder.match_Title.setText(data.get(i).getJsonObject().getString("score"));
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context.getApplicationContext(),Main2Activity.class);
+                    intent.putExtra("id","sss");
+                    intent.putExtra("id2",data.get(i).getOldMatchesListsItem().getUnique_id());
+                    context.startActivity(intent);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

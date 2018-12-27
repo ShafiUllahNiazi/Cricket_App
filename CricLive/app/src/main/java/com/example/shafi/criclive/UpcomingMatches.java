@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,13 +26,14 @@ public class UpcomingMatches extends Fragment {
     private RecyclerView recyclerView;
     private UpcomingMatchesAdapter upcomingMatchesAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList<LiveMatchesModelClass> listLiveMatches;
-    ArrayList<OldMatchesModelClass> listOldMatches;
+
+    ArrayList<OldMatchesDescriptiveModelClass> listOld;
     ArrayList<UpcomingMatchesModelClass> listUpcomingMatches;
     ArrayList<LiveMatchesDescriptiveModelClass> listLive;
 
     private MyAdapter myAdapter;
     private OldMatchAdapter oldMatchAdapter;
+    SwipeRefreshLayout swipeRefreshLayoutUpcomingMatches;
 
 
     private static final String TAG ="Tab1Fragment";
@@ -44,14 +46,14 @@ public class UpcomingMatches extends Fragment {
 
         View view = inflater.inflate(R.layout.upcoming_matches,container,false);
 
-        textView = view.findViewById(R.id.textView3);
-        listLiveMatches=new ArrayList<>();
-        listOldMatches=new ArrayList<>();
+
+        listLive=new ArrayList<>();
+        listOld=new ArrayList<>();
         listUpcomingMatches=new ArrayList<>();
         listUpcomingMatches.add(new UpcomingMatchesModelClass(111,"2","3","","","",true,false));
 
         context = getActivity();
-        button = view.findViewById(R.id.button3);
+
 
 
         recyclerView = view.findViewById(R.id.recyclerView3);
@@ -64,7 +66,7 @@ public class UpcomingMatches extends Fragment {
 
 
         myAdapter= new MyAdapter(context,listLive);
-        oldMatchAdapter = new OldMatchAdapter(context,listOldMatches);
+        oldMatchAdapter = new OldMatchAdapter(context,  listOld);
 
 //        mAdapter.shaficonfirm(OldMatches.this);
 
@@ -72,25 +74,21 @@ public class UpcomingMatches extends Fragment {
 
         recyclerView.setAdapter(upcomingMatchesAdapter);
 
-
-        button.setOnClickListener(new View.OnClickListener() {
+        swipeRefreshLayoutUpcomingMatches = view.findViewById(R.id.swipeRefreshLayoutUpcomingMatches);
+        swipeRefreshLayoutUpcomingMatches.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onRefresh() {
                 String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
 //                ApiRead apiRead = new ApiRead(mAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
-                ApiRead apiRead = new ApiRead(myAdapter,oldMatchAdapter,upcomingMatchesAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
+                ApiRead apiRead = new ApiRead(myAdapter,oldMatchAdapter,upcomingMatchesAdapter,listUpcomingMatches);
 
+                apiRead.setListUpcoming(swipeRefreshLayoutUpcomingMatches);
                 apiRead.execute(apiUrl);
-
-
-
-//                listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
-//                mAdapter.notifyItemInserted(listLiveMatches.size()-1);
-
-                Toast.makeText(getActivity(), "Button Tab 3 ", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
         return view;
     }
 }

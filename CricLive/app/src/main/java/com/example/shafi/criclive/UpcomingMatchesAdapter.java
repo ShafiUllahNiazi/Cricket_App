@@ -35,7 +35,7 @@ public class UpcomingMatchesAdapter extends RecyclerView.Adapter<UpcomingMatches
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.match_Title.setText(Long.toString(data.get(i).getUnique_id()));
+        viewHolder.match_Title.setText(data.get(i).getTeam_1()+" vs "+ data.get(i).getTeam_2() );
     }
 
     @Override

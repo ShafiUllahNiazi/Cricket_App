@@ -20,10 +20,10 @@ public class MatchSummary  extends Fragment {
     public MatchSummary() {
 
     }
-    public void setData (String data) {
-        this.data = data;
-
-    }
+//    public void setData (String data) {
+//        this.data = data;
+//
+//    }
 
 
     @Nullable
@@ -31,6 +31,7 @@ public class MatchSummary  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.match_summary,container,false);
         textView2 = view.findViewById(R.id.textView2);
+        data = getArguments().getString("unique_id");
         textView2.setText(data);
         Toast.makeText(getActivity(), "jjj "+data, Toast.LENGTH_SHORT).show();
 //        Log.d("DATAA",data);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,14 +24,14 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
 
     private static final String TAG ="Tab1Fragment";
 
-    private Button btnTest;
+    private SwipeRefreshLayout swipeRefreshLayoutLiveMatches;
 
     TextView textView;
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList<LiveMatchesModelClass> listLiveMatches;
-    ArrayList<OldMatchesModelClass> listOldMatches;
+
+
     ArrayList<UpcomingMatchesModelClass> listUpcomingMatches;
 
     private OldMatchAdapter oldMatchAdapter;
@@ -40,6 +41,8 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
 
     ArrayList<JSONObject> jsonObjects;
     ArrayList<LiveMatchesDescriptiveModelClass> listLive;
+    ArrayList<OldMatchesDescriptiveModelClass> listOld;
+
 
 
     Button button;
@@ -51,23 +54,18 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.live_matches,container,false);
-        textView = view.findViewById(R.id.textView1);
-        listLiveMatches=new ArrayList<>();
-        listOldMatches=new ArrayList<>();
+
+        listLive=new ArrayList<>();
+        listOld=new ArrayList<>();
         listUpcomingMatches=new ArrayList<>();
         listLive = new ArrayList<>();
 //        listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("score","a vs b");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 //        listLive.add(new LiveMatchesDescriptiveModelClass(listLiveMatches.get(0),jsonObject));
 //        listOldMatches.add(new OldMatchesModelClass(1,"2","3","","","",true,"","",true));
 //        listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
         context = getActivity();
-        button = view.findViewById(R.id.button1);
+
 
 
         recyclerView = view.findViewById(R.id.recyclerView1);
@@ -82,7 +80,7 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
 
 
 
-        oldMatchAdapter = new OldMatchAdapter(context,listOldMatches);
+        oldMatchAdapter = new OldMatchAdapter(context,listOld);
         upcomingMatchesAdapter = new UpcomingMatchesAdapter(context,listUpcomingMatches);
 
 
@@ -91,40 +89,28 @@ public class LiveMatches extends Fragment implements MyAdapter.shaficlass {
         recyclerView.setAdapter(myAdapter);
 
 
-
-
-        button.setOnClickListener(new View.OnClickListener() {
+        swipeRefreshLayoutLiveMatches= view.findViewById(R.id.swipeRefreshLayoutLiveMatches);
+        swipeRefreshLayoutLiveMatches.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
+            public void onRefresh() {
 
-                String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
-
-//                requestTOApi = new RequestTOApi(mAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
-//
-//                requestTOApi.sentRequest();
+                requestTOLiveMatches(swipeRefreshLayoutLiveMatches);
 
 
-
-//                ApiRead apiRead = new ApiRead(mAdapter,list);
-//                ApiRead apiRead = new ApiRead(mAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
-                ApiRead apiRead = new ApiRead(myAdapter,oldMatchAdapter,upcomingMatchesAdapter,listLiveMatches,listOldMatches,listUpcomingMatches);
-
-                apiRead.setListLive(listLive);
-                apiRead.execute(apiUrl);
-
-
-
-//                listLiveMatches.add(new LiveMatchesModelClass(1,"2","3","","","",true,"",true));
-//                myAdapter.notifyItemInserted(listLiveMatches.size()-1);
-
-                Toast.makeText(getActivity(), "Button Tab 1 ", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-
-
         return view;
+    }
+
+    private void requestTOLiveMatches(SwipeRefreshLayout swipeRefreshLayoutLiveMatches) {
+        String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
+        ApiRead apiRead = new ApiRead(myAdapter,oldMatchAdapter,upcomingMatchesAdapter,listUpcomingMatches);
+        apiRead.setListLive(listLive,swipeRefreshLayoutLiveMatches);
+        apiRead.execute(apiUrl);
+        Toast.makeText(getActivity(), "swipe live matches ", Toast.LENGTH_SHORT).show();
+
     }
 
 

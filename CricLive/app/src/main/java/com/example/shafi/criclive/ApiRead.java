@@ -1,6 +1,7 @@
 package com.example.shafi.criclive;
 
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -31,17 +32,23 @@ public class ApiRead extends AsyncTask<String, Void, String> {
     private String winner_team;
     private boolean matchStarted;
 
-    ArrayList<LiveMatchesModelClass> listliveMatches;
-    ArrayList<OldMatchesModelClass> listOldMatches;
+
+
     ArrayList<UpcomingMatchesModelClass> listUpcomingMatches;
     MyAdapter mAdapter;
     OldMatchAdapter oldMatchAdapter;
     UpcomingMatchesAdapter upcomingMatchesAdapter;
     JSONObject jsonObject;
     ArrayList<LiveMatchesDescriptiveModelClass> listLive;
+    ArrayList<OldMatchesDescriptiveModelClass> listOld;
+    SwipeRefreshLayout swipeRefreshLayout;
+//    SwipeRefreshLayout swipeRefreshLayoutOldMatches;
 
-    public void setListLive(ArrayList<LiveMatchesDescriptiveModelClass> listLive) {
+    public void setListLive(ArrayList<LiveMatchesDescriptiveModelClass> listLive, SwipeRefreshLayout swipeRefreshLayoutLiveMatches) {
         this.listLive = listLive;
+        this.swipeRefreshLayout = swipeRefreshLayoutLiveMatches;
+        this.listOld = new ArrayList<>();
+
     }
 
 
@@ -49,13 +56,11 @@ public class ApiRead extends AsyncTask<String, Void, String> {
     TextView textView;
 
 
-    public ApiRead (MyAdapter mAdapter,OldMatchAdapter oldMatchAdapter,UpcomingMatchesAdapter upcomingMatchesAdapter,ArrayList<LiveMatchesModelClass> listliveMatches,ArrayList<OldMatchesModelClass> listOldMatches,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
+    public ApiRead (MyAdapter mAdapter,OldMatchAdapter oldMatchAdapter,UpcomingMatchesAdapter upcomingMatchesAdapter,ArrayList<UpcomingMatchesModelClass> listUpcomingMatches) {
 
         this.mAdapter=mAdapter;
         this.oldMatchAdapter= oldMatchAdapter;
         this.upcomingMatchesAdapter= upcomingMatchesAdapter;
-        this.listliveMatches = listliveMatches;
-        this.listOldMatches = listOldMatches;
         this.listUpcomingMatches = listUpcomingMatches;
 
 
@@ -91,8 +96,12 @@ public class ApiRead extends AsyncTask<String, Void, String> {
                     if(jsonArray.getJSONObject(i).has("winner_team")){
                         toss_winner_team = jsonArray.getJSONObject(i).getString("toss_winner_team");
                         winner_team = jsonArray.getJSONObject(i).getString("winner_team");
-                        listOldMatches.add(new OldMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,winner_team,matchStarted));
 
+
+                        OldMatchesModelClass itemOldMatches = new OldMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,winner_team,matchStarted);
+                        String scoreUrlOldMatch = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+unique_id+"";
+                        ApiReadCricketScoreOldMatches readCricketScore = new ApiReadCricketScoreOldMatches(oldMatchAdapter,listOld,itemOldMatches);
+                        readCricketScore.execute(scoreUrlOldMatch);
 
                     }else{
                         toss_winner_team = jsonArray.getJSONObject(i).getString("toss_winner_team");
@@ -121,9 +130,10 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
             }
 
-            Log.d("sizeeeL",Integer.toString(listliveMatches.size()));
 
-            Log.d("sizeeeO",Integer.toString(listOldMatches.size()));
+
+
+
             Log.d("sizeeeU",Integer.toString(listUpcomingMatches.size()));
             mAdapter.notifyDataSetChanged();
             oldMatchAdapter.notifyDataSetChanged();
@@ -131,26 +141,18 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
 
 
-            Log.d("Khann",listliveMatches.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        swipeRefreshLayout.setRefreshing(false);
 
-//        populateListsActual(listliveMatches,listOldMatches);
+
 
     }
 
-    private void populateListsActual(ArrayList<LiveMatchesModelClass> listliveMatches, ArrayList<OldMatchesModelClass> listOldMatches) {
-        for (int i=0; i<2;i++){
 
-            String scoreUrl = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+Long.toString(listliveMatches.get(i).getUnique_id());
-            ApiReadCricketScore apiReadCricketScore = new ApiReadCricketScore(mAdapter,listLive,listliveMatches.get(i));
-            apiReadCricketScore.execute(scoreUrl);
-
-
-        }
-    }
 
 
     @Override
@@ -195,5 +197,19 @@ public class ApiRead extends AsyncTask<String, Void, String> {
 
 
         return null;
+    }
+
+    public void setListOld(ArrayList<OldMatchesDescriptiveModelClass> listOld, SwipeRefreshLayout swipeRefreshLayoutOldMatches) {
+
+        this.listOld = listOld;
+        this.swipeRefreshLayout = swipeRefreshLayoutOldMatches;
+        this.listLive = new ArrayList<>();
+
+    }
+
+    public void setListUpcoming(SwipeRefreshLayout swipeRefreshLayoutUpcomingMatches) {
+        swipeRefreshLayout = swipeRefreshLayoutUpcomingMatches;
+        this.listLive = new ArrayList<>();
+        this.listOld = new ArrayList<>();
     }
 }
