@@ -9,7 +9,6 @@ public class LiveMatchesDescriptiveModelClass implements Serializable {
     private JSONObject jsonObject;
     private LiveMatchesModelClass liveMatchesListsItem;
 
-
     public LiveMatchesDescriptiveModelClass(LiveMatchesModelClass liveMatchesListsItem, JSONObject jsonObject) {
         this.liveMatchesListsItem = liveMatchesListsItem;
         this.jsonObject = jsonObject;

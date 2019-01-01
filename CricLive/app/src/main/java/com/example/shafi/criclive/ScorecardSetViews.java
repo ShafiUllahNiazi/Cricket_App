@@ -12,13 +12,13 @@ public class ScorecardSetViews {
     private ViewPager viewPager;
     private TabLayout mTabLayout;
     private FragmentManager scorecardFragmentManager;
-    Context context;
 
-    public ScorecardSetViews(ViewPager viewPager, TabLayout mTabLayout, FragmentManager scorecardFragmentManager, Context context) {
+
+    public ScorecardSetViews(ViewPager viewPager, TabLayout mTabLayout, FragmentManager scorecardFragmentManager) {
         this.viewPager = viewPager;
         this.mTabLayout = mTabLayout;
         this.scorecardFragmentManager = scorecardFragmentManager;
-        this.context = context;
+
     }
 
 
@@ -52,7 +52,7 @@ public class ScorecardSetViews {
 
             mTabLayout.addTab(mTabLayout.newTab().setText("Category: " + i));
         }
-        DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(scorecardFragmentManager, mTabLayout.getTabCount(),scorecardList,context);
+        DynamicFragmentAdapter mDynamicFragmentAdapter = new DynamicFragmentAdapter(scorecardFragmentManager, mTabLayout.getTabCount(),scorecardList);
         viewPager.setAdapter(mDynamicFragmentAdapter);
         viewPager.setCurrentItem(0);
     }

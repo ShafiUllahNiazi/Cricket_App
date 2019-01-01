@@ -13,15 +13,15 @@ public class DynamicFragmentAdapter extends FragmentStatePagerAdapter {
 
     private int mNumOfTabs;
     private ArrayList<Scorecard> scorecardList;
-    Context context;
 
 
-    public DynamicFragmentAdapter(FragmentManager fm, int numOfTabs, ArrayList<Scorecard> scorecardList, Context context) {
+
+    public DynamicFragmentAdapter(FragmentManager fm, int numOfTabs, ArrayList<Scorecard> scorecardList) {
 
         super(fm);
         this.mNumOfTabs= numOfTabs;
         this.scorecardList = scorecardList;
-        this.context = context;
+
 
     }
 

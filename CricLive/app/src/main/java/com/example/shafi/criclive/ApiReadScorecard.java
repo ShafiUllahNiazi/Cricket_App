@@ -28,7 +28,7 @@ public class ApiReadScorecard extends AsyncTask<String, Void, String> {
     private ViewPager viewPager;
     private TabLayout mTabLayout;
     private FragmentManager scorecardFragmentManager;
-    Context context;
+
 
     private String pid;
     private String batsman;
@@ -55,11 +55,10 @@ public class ApiReadScorecard extends AsyncTask<String, Void, String> {
     private int sixesBowler;
     SwipeRefreshLayout swipeRefreshLayoutScorecard;
 
-    public void setViews(ViewPager viewPager, TabLayout mTabLayout, FragmentManager scorecardFragmentManager, Context context, SwipeRefreshLayout swipeRefreshLayoutScorecard) {
+    public void setViews(ViewPager viewPager, TabLayout mTabLayout, FragmentManager scorecardFragmentManager, SwipeRefreshLayout swipeRefreshLayoutScorecard) {
         this.viewPager = viewPager;
         this.mTabLayout = mTabLayout;
         this.scorecardFragmentManager=scorecardFragmentManager;
-        this.context = context;
         this.swipeRefreshLayoutScorecard = swipeRefreshLayoutScorecard;
     }
 
@@ -158,7 +157,7 @@ public class ApiReadScorecard extends AsyncTask<String, Void, String> {
 //                myAdapter.notifyDataSetChanged();
 //                bowlingCardAdapter.notifyDataSetChanged();
 
-            ScorecardSetViews scorecardSetViews = new ScorecardSetViews(viewPager,mTabLayout,scorecardFragmentManager,context);
+            ScorecardSetViews scorecardSetViews = new ScorecardSetViews(viewPager,mTabLayout,scorecardFragmentManager);
             scorecardSetViews.initViews(numOftabs,scorecardList);
 
 //

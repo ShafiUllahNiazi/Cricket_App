@@ -98,10 +98,10 @@ public class ApiRead extends AsyncTask<String, Void, String> {
                         winner_team = jsonArray.getJSONObject(i).getString("winner_team");
 
 
-                        OldMatchesModelClass itemOldMatches = new OldMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,winner_team,matchStarted);
-                        String scoreUrlOldMatch = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+unique_id+"";
-                        ApiReadCricketScoreOldMatches readCricketScore = new ApiReadCricketScoreOldMatches(oldMatchAdapter,listOld,itemOldMatches);
-                        readCricketScore.execute(scoreUrlOldMatch);
+//                        OldMatchesModelClass itemOldMatches = new OldMatchesModelClass(unique_id,date,dateTimeGMT,team_1,team_2,type,squad,toss_winner_team,winner_team,matchStarted);
+//                        String scoreUrlOldMatch = "https://cricapi.com/api/cricketScore?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id="+unique_id+"";
+//                        ApiReadCricketScoreOldMatches readCricketScore = new ApiReadCricketScoreOldMatches(oldMatchAdapter,listOld,itemOldMatches);
+//                        readCricketScore.execute(scoreUrlOldMatch);
 
                     }else{
                         toss_winner_team = jsonArray.getJSONObject(i).getString("toss_winner_team");

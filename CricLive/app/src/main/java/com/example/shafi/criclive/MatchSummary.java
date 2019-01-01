@@ -30,7 +30,7 @@ public class MatchSummary  extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.match_summary,container,false);
-        textView2 = view.findViewById(R.id.textView2);
+        textView2 = view.findViewById(R.id.ManOfTheMatch);
         data = getArguments().getString("unique_id");
         textView2.setText(data);
         Toast.makeText(getActivity(), "jjj "+data, Toast.LENGTH_SHORT).show();

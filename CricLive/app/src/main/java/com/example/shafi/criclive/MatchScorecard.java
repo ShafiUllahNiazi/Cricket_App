@@ -25,7 +25,6 @@ public class MatchScorecard extends Fragment {
     private ViewPager viewPager;
     private TabLayout mTabLayout;
     private FragmentManager scorecardFragmentManager;
-    Context context;
     SwipeRefreshLayout swipeRefreshLayoutScorecard;
 
     @Nullable
@@ -34,7 +33,7 @@ public class MatchScorecard extends Fragment {
         View view = inflater.inflate(R.layout.match_scorecard,container,false);
 
         scorecardFragmentManager = getActivity().getSupportFragmentManager();
-        context = getActivity();
+
         unique_id = getArguments().getString("unique_id");
 
         viewPager = view.findViewById(R.id.viewpagerScorecard);
@@ -59,7 +58,7 @@ public class MatchScorecard extends Fragment {
     private void requestTOUpcomingMatches() {
         String s = "https://cricapi.com/api/fantasySummary?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1&unique_id=" + unique_id;
         ApiReadScorecard apiReadScorecard = new ApiReadScorecard();
-        apiReadScorecard.setViews(viewPager,mTabLayout,scorecardFragmentManager,context,swipeRefreshLayoutScorecard);
+        apiReadScorecard.setViews(viewPager,mTabLayout,scorecardFragmentManager,swipeRefreshLayoutScorecard);
         apiReadScorecard.execute(s);
     }
 }
