@@ -15,6 +15,7 @@ import com.example.shafi.criclive.controllers.fragments.MatchScorecard;
 import com.example.shafi.criclive.MatchSummary;
 import com.example.shafi.criclive.R;
 import com.example.shafi.criclive.controllers.adapters.SectionPageAdapter;
+import com.example.shafi.criclive.controllers.fragments.MatchSummayOldMatches;
 import com.example.shafi.criclive.themeUtils;
 
 public class Main2Activity extends AppCompatActivity {
@@ -26,6 +27,8 @@ public class Main2Activity extends AppCompatActivity {
     long unique_id;
     String score;
     String winner_team;
+    String summaryType;
+
 
 
     @Override
@@ -37,6 +40,7 @@ public class Main2Activity extends AppCompatActivity {
         unique_id = intent.getLongExtra("id2", 0);
         score = intent.getStringExtra("score");
         winner_team = intent.getStringExtra("winner_team");
+        summaryType = intent.getStringExtra("summaryType");
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container2);
         setupViewPager(mViewPager);
@@ -47,12 +51,35 @@ public class Main2Activity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
-        MatchSummary matchSummaryFragment = new MatchSummary();
+
+//        if(summaryType.equals("Live")){
+//
+//            MatchSummary matchSummaryFragment = new MatchSummary();
+//            Bundle b = new Bundle();
+//            b.putString("unique_id", unique_id + "");
+//            b.putString("score",score);
+//            matchSummaryFragment.setArguments(b);
+//            adapter.addFragment(matchSummaryFragment, "Match Summary");
+//
+//        }else {
+//
+//
+//            MatchSummayOldMatches summayOldMatches = new MatchSummayOldMatches();
+//            Bundle b = new Bundle();
+//            b.putString("unique_id", unique_id + "");
+//            b.putString("score",score);
+//            b.putString("winner_team",winner_team);
+//            summayOldMatches.setArguments(b);
+//            adapter.addFragment(summayOldMatches, "Match Summary");
+//        }
+
+        MatchSummayOldMatches summayOldMatches = new MatchSummayOldMatches();
         Bundle b = new Bundle();
         b.putString("unique_id", unique_id + "");
         b.putString("score",score);
-        matchSummaryFragment.setArguments(b);
-        adapter.addFragment(matchSummaryFragment, "Match Summary");
+        b.putString("winner_team",winner_team);
+        summayOldMatches.setArguments(b);
+        adapter.addFragment(summayOldMatches, "Match Summary");
         MatchScorecard matchScorecardFragment = new MatchScorecard();
         Bundle bundle = new Bundle();
         bundle.putString("unique_id", unique_id + "");

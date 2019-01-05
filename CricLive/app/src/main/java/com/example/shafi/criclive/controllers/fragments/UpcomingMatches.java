@@ -94,6 +94,8 @@ public class UpcomingMatches extends Fragment {
 
     private void requestToUpcomingMatches() {
 
+
+
         String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
         ApiRead apiRead = new ApiRead(context, swipeRefreshLayoutUpcomingMatches, myAdapter,oldMatchAdapter,upcomingMatchesAdapter, listLive, listOld, listUpcomingMatches);
 

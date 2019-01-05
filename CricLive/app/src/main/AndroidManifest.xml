@@ -24,7 +24,8 @@
         <activity
             android:name=".controllers.activities.Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
     </application>
 
 </manifest>

@@ -63,6 +63,7 @@ public class OldMatchAdapter extends RecyclerView.Adapter<OldMatchAdapter.ViewHo
                     intent.putExtra("id","sss");
                     intent.putExtra("id2",data.get(i).getOldMatchesListsItem().getUnique_id());
                     intent.putExtra("winner_team",data.get(i).getOldMatchesListsItem().getWinner_team());
+                    intent.putExtra("summaryType","Old");
                     try {
                         intent.putExtra("score",data.get(i).getJsonObject().getString("score"));
                     } catch (JSONException e) {

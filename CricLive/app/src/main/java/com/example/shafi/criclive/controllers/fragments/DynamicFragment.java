@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.shafi.criclive.R;
 import com.example.shafi.criclive.models.Scorecard;
@@ -31,21 +32,44 @@ public class DynamicFragment extends Fragment {
     private ArrayList<Scorecard> scorecardList;
     private ArrayList<BattingCardModel> battingCardList;
     private ArrayList<BowlingModelClass> bowlingCardList;
+    int position;
     public static DynamicFragment newInstance() {
         return new DynamicFragment();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        outState.putString("message", "This is my message to be reloaded");
+        outState.putParcelableArrayList("scorecardList",scorecardList);
+        outState.putInt("position",position);
+//        Bundle  bundle =  new Bundle();
+//        bundle.putParcelableArrayList("scorecardList",scorecardList);
+//        bundle.putInt("position",position);
+//        outState.putBundle("bundle",);
+        super.onSaveInstanceState(outState);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dynamic_fragment_layout, container, false);
+        if (savedInstanceState != null) {
+
+            scorecardList = savedInstanceState.getParcelableArrayList("scorecardList");
+            position = savedInstanceState.getInt("position");
+            Toast.makeText(getContext(), "Hi"+scorecardList.size(), Toast.LENGTH_SHORT).show();
+
+        }else {
+            scorecardList = getArguments().getParcelableArrayList("scorecardList");
+        }
         initViews(view);
         return view;
     }
 
     private void initViews(View view) {
-        scorecardList = getArguments().getParcelableArrayList("scorecardList");
-        int position = getArguments().getInt("position");
+//        getArguments().get
+
+        position = getArguments().getInt("position");
         battingCardList = scorecardList.get(position).getBattingCardList();
         bowlingCardList = scorecardList.get(position).getBowlingCardList();
         recyclerView = view.findViewById(R.id.recyclerView12);

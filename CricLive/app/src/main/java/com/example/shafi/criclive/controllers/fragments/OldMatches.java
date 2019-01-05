@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.shafi.criclive.controllers.ApiReading.ApiRead;
+import com.example.shafi.criclive.controllers.ApiReading.ApiReadOldMatches;
 import com.example.shafi.criclive.database.DatabasesInsertData;
 import com.example.shafi.criclive.database.DatabasesRetrieveData;
 import com.example.shafi.criclive.controllers.adapters.MyAdapter;
 import com.example.shafi.criclive.controllers.adapters.OldMatchAdapter;
 import com.example.shafi.criclive.R;
 import com.example.shafi.criclive.controllers.adapters.UpcomingMatchesAdapter;
+import com.example.shafi.criclive.database.OldMatchesDatabase;
 import com.example.shafi.criclive.models.LiveMatchesDescriptiveModelClass;
 import com.example.shafi.criclive.models.OldMatchesDescriptiveModelClass;
 import com.example.shafi.criclive.models.UpcomingMatchesModelClass;
@@ -93,10 +95,11 @@ public class OldMatches extends Fragment {
     private void requestTOOldMatches(SwipeRefreshLayout swipeRefreshLayoutOldMatches) {
 
 //        swipeRefreshLayoutOldMatches.setRefreshing(false);
+
         String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
         ApiRead apiRead = new ApiRead(context, swipeRefreshLayoutOldMatches, myAdapter,oldMatchAdapter,upcomingMatchesAdapter, listLive, listOld, listUpcomingMatches);
         apiRead.execute(apiUrl);
-        Toast.makeText(getActivity(), "request sending ", Toast.LENGTH_SHORT).show();
+
 
     }
 

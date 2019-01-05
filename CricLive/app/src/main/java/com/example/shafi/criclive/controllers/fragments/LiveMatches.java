@@ -21,6 +21,7 @@ import com.example.shafi.criclive.controllers.adapters.MyAdapter;
 import com.example.shafi.criclive.controllers.adapters.OldMatchAdapter;
 import com.example.shafi.criclive.R;
 import com.example.shafi.criclive.controllers.adapters.UpcomingMatchesAdapter;
+import com.example.shafi.criclive.database.LiveMatchesDatabase;
 import com.example.shafi.criclive.models.LiveMatchesDescriptiveModelClass;
 import com.example.shafi.criclive.models.OldMatchesDescriptiveModelClass;
 import com.example.shafi.criclive.models.UpcomingMatchesModelClass;
@@ -88,6 +89,7 @@ public class LiveMatches extends Fragment  {
     }
 
     private void requestTOLiveMatches(SwipeRefreshLayout swipeRefreshLayoutLiveMatches) {
+
 
         String apiUrl = "https://cricapi.com/api/matches?apikey=tcS2HOv2g6bRglcrHf1pXPoOOIn1";
         ApiRead apiRead = new ApiRead(context,swipeRefreshLayoutLiveMatches, myAdapter, oldMatchAdapter, upcomingMatchesAdapter,listLive,listOld, listUpcomingMatches);

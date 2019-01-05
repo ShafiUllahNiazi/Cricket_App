@@ -54,6 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     Intent main2 = new Intent(context.getApplicationContext(), Main2Activity.class);
                     main2.putExtra("id", "DDDDDDDD");
                     main2.putExtra("id2", data.get(i).getLiveMatchesListsItem().getUnique_id());
+                    main2.putExtra("summaryType","Live");
                     context.startActivity(main2);
                 }
             });

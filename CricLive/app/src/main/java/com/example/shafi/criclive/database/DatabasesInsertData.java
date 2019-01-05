@@ -40,7 +40,7 @@ public class DatabasesInsertData {
             mOldMatchesDatabase.deleteDB();
             mOldMatchesDatabase = new OldMatchesDatabase(context);
             if (mOldMatchesDatabase.insertData(listOld)){
-                Toast.makeText(context, "Data Inserted old....", Toast.LENGTH_SHORT).show();
+
                 Log.d("insertdata","Data Inserted old...." + listOld.size()+"");
 
 
