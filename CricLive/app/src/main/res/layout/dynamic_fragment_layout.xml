@@ -11,15 +11,13 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_dark"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:background="@color/colorPrimary">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@android:color/holo_blue_dark"
+            app:cardBackgroundColor="@color/colorPrimary"
             app:cardElevation="24dp">
 
             <LinearLayout
@@ -30,52 +28,55 @@
                     android:id="@+id/batsman"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal"
                     android:shadowColor="@color/colorAccent"
                     android:text="Batsman"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/dismissal_info"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="dismissal" />
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal" />
 
                 <TextView
                     android:id="@+id/runs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="R" />
+                    android:gravity="center_horizontal"
+                    android:text="R"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/balls"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="B" />
+                    android:gravity="center_horizontal"
+                    android:text="B"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/fours"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="4s" />
+                    android:gravity="center_horizontal"
+                    android:text="4s"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/sixes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="6s" />
+                    android:gravity="center_horizontal"
+                    android:text="6s"
+                    android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/sr"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="SR" />
             </LinearLayout>
 
 
@@ -86,6 +87,7 @@
         android:id="@+id/recyclerView12"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="3" />
 
     <LinearLayout
@@ -98,7 +100,7 @@
             android:id="@+id/cvbow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardBackgroundColor="@color/colorPrimary"
             app:cardElevation="24dp">
 
             <LinearLayout
@@ -110,7 +112,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:text="Bowler" />
+                    android:text="Bowler"
+                    android:textColor="@android:color/white" />
 
 
                 <TextView
@@ -118,35 +121,40 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="O" />
+                    android:text="O"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/maiden"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="M" />
+                    android:text="M"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/runsBowler"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="R" />
+                    android:text="R"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/wickets"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="W" />
+                    android:text="W"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/econ"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Econ" />
+                    android:text="E"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
 

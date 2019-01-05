@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.shafi.criclive.LiveMatchesDescriptiveModelClass;
-import com.example.shafi.criclive.OldMatchesDescriptiveModelClass;
+import com.example.shafi.criclive.models.OldMatchesDescriptiveModelClass;
 
 import org.json.JSONException;
 
@@ -97,8 +96,6 @@ public class OldMatchesDatabase extends SQLiteOpenHelper {
         }
 
 
-
-//        long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         if (result == -1)
             return false;
         return true;

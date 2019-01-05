@@ -5,9 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.shafi.criclive.LiveMatchesDescriptiveModelClass;
+import com.example.shafi.criclive.models.LiveMatchesDescriptiveModelClass;
 
 import org.json.JSONException;
 
@@ -82,7 +81,7 @@ public class LiveMatchesDatabase extends SQLiteOpenHelper {
             contentValues.put(COL_10,String.valueOf(liveList.get(i).getLiveMatchesListsItem().isMatchStarted()));
 
             result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
-            Log.d("LiveMatchesInserted","LiveMatchesInserted");
+
 
 
 
@@ -90,8 +89,6 @@ public class LiveMatchesDatabase extends SQLiteOpenHelper {
         }
 
 
-
-//        long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         if (result == -1)
             return false;
         return true;
